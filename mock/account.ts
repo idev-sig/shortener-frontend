@@ -62,9 +62,7 @@ const currentUser = (req: Request, res: Response) => {
     return;
   }
   res.send({
-    id: 1,
     name: 'jetsung',
-    level: getAccess(),
   });
 };
 

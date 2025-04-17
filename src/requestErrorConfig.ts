@@ -1,6 +1,6 @@
 ﻿import type { RequestOptions } from '@@/plugin-request/request';
 import type { RequestConfig } from '@umijs/max';
-import { message, notification } from 'antd';
+import { message } from 'antd';
 
 /**
  * @name 错误处理
@@ -14,7 +14,7 @@ export const errorConfig: RequestConfig = {
     errorThrower: (res) => {
       console.log('errorThrower:', res);
       const { errcode, errinfo } =
-        res as unknown as API2.ResponseError;
+        res as unknown as API.ErrorResponse;
       if (errcode && errinfo) {
         const error: any = new Error(errinfo);
         error.name = 'BizError';
@@ -29,7 +29,7 @@ export const errorConfig: RequestConfig = {
       if (opts?.skipErrorHandler) throw error;
       if (error.name === 'BizError') {
         console.error('BizError:', error);
-        const errorInfo: API2.ResponseError | undefined = error.info;
+        const errorInfo: API.ErrorResponse | undefined = error.info;
         if (errorInfo) {
           const { errinfo } = errorInfo;
           message.error(errinfo);
@@ -53,7 +53,7 @@ export const errorConfig: RequestConfig = {
   // 请求拦截器
   requestInterceptors: [
     (config: RequestOptions) => {
-      console.log('请求拦截器:', config);
+      // console.log('请求拦截器:', config);
       // 拦截请求配置，进行个性化处理。
       // const url = config?.url?.concat('?token = 123');
       const url = config?.url;
@@ -69,9 +69,9 @@ export const errorConfig: RequestConfig = {
   // 响应拦截器
   responseInterceptors: [
     (response: any) => {
-      console.log('响应拦截器:', response);
+      // console.log('响应拦截器:', response);
       // 拦截响应数据，进行个性化处理
-      const { errcode, errinfo } = response as unknown as API2.ResponseError;
+      const { errcode, errinfo } = response as unknown as API.ErrorResponse;
 
       if (errcode && errinfo) {
         message.error('请求失败！');

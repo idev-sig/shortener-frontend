@@ -9,8 +9,8 @@ const useStyles = createStyles(({ token }) => {
       backgroundPosition: '100% -30%',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '274px auto',
-      backgroundImage:
-        "url('https://gw.alipayobjects.com/mdn/rms_a9745b/afts/img/A*BuFmQqsB2iAAAAAAAAAAAAAAARQnAQ')",
+      // backgroundImage:
+      //   "url('https://gw.alipayobjects.com/mdn/rms_a9745b/afts/img/A*BuFmQqsB2iAAAAAAAAAAAAAAARQnAQ')",
     },
     textHeading: {
       fontSize: '20px',
@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
             欢迎使用 Shortener 短网址生成器
           </div>
           <p className={styles.welcome}>
-            Shortener 是一个使用 Go 语言开发的短网址生成器。后端使用 Gin 框架，前端使用 React 框架，UI 框架使用 Ant Design。
+            Shortener 是一个使用 Go 语言开发的短网址生成器。<a href='https://git.jetsung.com/idev/shortener' target='_blank'>后端使用 Gin 框架</a>，<a href='https://git.jetsung.com/idev/shortener-frontend' target='_blank'>前端使用 React 框架</a>，UI 框架使用 Ant Design。
           </p>
         </div>
       </Card>

@@ -1,57 +1,122 @@
-# Ant Design Pro
+# Shortener Frontend
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
+一个超简单的短网址管理平台（前端）。
 
-## Environment Prepare
+[**配置后端 API：shortener**](https://git.jetsung.com/idev/shortener)
 
-Install `node_modules`:
+预览: ![Shortener](screenshot.png)
+
+## 开发与构建
+
+### 安装依赖
 
 ```bash
 npm install
 ```
 
-or
+### 本地开发
+
+1. 更新 OpenAPI
+   - 修改 `config/openapi.json`
+2. 生成 OpenAPI API
 
 ```bash
-yarn
+npm run openapi
 ```
 
-## Provided Scripts
-
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
-
-Scripts provided in `package.json`. It's safe to modify or add additional script:
-
-### Start project
+### 本地运行
 
 ```bash
-npm start
+# Mock 模式
+npm run start
+
+# Proxy 模式
+npm run dev
 ```
 
-### Build project
+### 构建
 
 ```bash
 npm run build
 ```
 
-### Check code style
+## 部署
 
-```bash
-npm run lint
+### Docker
+
+```yaml
+---
+# https://github.com/idevsig/shortener
+
+services:
+  shortener:
+    image: ghcr.io/idevsig/shortener:dev-amd64
+    container_name: shortener
+    restart: unless-stopped
+    ports:
+      - ${BACKEND_PORT:-8080}:8080
+    volumes:
+      - ./data:/app/data
+      - ./config.toml:/app/config.toml
+    depends_on:
+      - valkey
+
+  valkey:
+    image: valkey/valkey:latest
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+
+  frontend:
+    image: ghcr.io/idevsig/shortener-frontend:dev-amd64
+    restart: unless-stopped
+    ports:
+      - ${FRONTEND_PORT:-8081}:80
 ```
 
-You can also use script to auto fix some lint error:
+### Nginx 反向代理
 
-```bash
-npm run lint:fix
+```nginx
+# 前端配置
+location / {
+    proxy_pass   http://127.0.0.1:8080;
+
+    client_max_body_size  1024m;
+    proxy_set_header Host $host:$server_port;
+
+    proxy_set_header X-Real-Ip $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;  # 透传 HTTPS 协议标识
+    proxy_set_header X-Forwarded-Ssl on;         # 明确 SSL 启用状态
+
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_connect_timeout 99999;
+}
+
+# 对接 API
+location /api/ {
+    proxy_pass   http://127.0.0.1:8081/api/v1/;
+
+    client_max_body_size  1024m;
+    proxy_set_header Host $host:$server_port;
+
+    proxy_set_header X-Real-Ip $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;  # 透传 HTTPS 协议标识
+    proxy_set_header X-Forwarded-Ssl on;         # 明确 SSL 启用状态
+
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_connect_timeout 99999;
+}
 ```
 
-### Test code
+## 仓库镜像
 
-```bash
-npm test
-```
-
-## More
-
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
+- https://git.jetsung.com/idev/shortener-frontend
+- https://framagit.org/idev/shortener-frontend
+- https://gitcode.com/idev/shortener-frontend
+- https://github.com/idevsig/shortener-frontend

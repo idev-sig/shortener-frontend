@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Get version
+      run: |
+        echo "RELEASE_VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+        prev_version=$(gh release list | grep Latest | awk '{print $1}')
+        echo "PREV_VERSION=$prev_version" >> $GITHUB_ENV
+
+    - name: Write Changelog
+      run: |
+        prev_to_latest="${{ env.PREV_VERSION }}...${{ env.RELEASE_VERSION }}"
+        printf "\n\n**Full Changelog:** [\`${prev_to_latest}\`](https://github.com/${{ github.repository }}/compare/${prev_to_latest})" >> .CurrentChangelog.md
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+    - name: Build
+      run: |
+        bun install
+        bun run build
