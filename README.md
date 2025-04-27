@@ -2,7 +2,7 @@
 
 一个超简单的短网址管理平台（前端）。
 
-[**配置后端 API：shortener**](https://git.jetsung.com/idev/shortener)
+[**配置后端 API：shortener**](https://git.jetsung.com/idev/shortener-server)
 
 预览: ![Shortener](screenshot.png)
 
@@ -46,11 +46,11 @@ npm run build
 
 ```yaml
 ---
-# https://github.com/idevsig/shortener
+# https://git.jetsung.com/idev/shortener-server
 
 services:
   shortener:
-    image: ghcr.io/idevsig/shortener:dev-amd64
+    image: ghcr.io/idevsig/shortener-server:dev-amd64
     container_name: shortener
     restart: unless-stopped
     ports:

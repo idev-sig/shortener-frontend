@@ -4,7 +4,7 @@ import {
   updateShorten,
   deleteShorten,
 } from '@/services/shortener/shorten';
-import { PlusOutlined } from '@ant-design/icons';
+import { CopyOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
   FooterToolbar,
@@ -15,17 +15,27 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import '@umijs/max';
-import { Button, message } from 'antd';
+import { Button, message, Tooltip } from 'antd';
 import React, { useRef, useState } from 'react';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
 import { createStyles } from 'antd-style';
 import { history } from 'umi';
 
-const useStyles = createStyles(() => {
+const useStyles = createStyles(({ token }) => {
   return {
     footerToolBar: {
       fontWeight: 600,
+    },
+    codeContainer: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      gap: 8,
+    },
+    copyIcon: {
+      cursor: 'pointer',
+      color: token.colorPrimary,
     },
   };
 });
@@ -48,6 +58,12 @@ const TableList: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const { styles } = useStyles();
+
+  const copyToClipboard = (text: string, messageText: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      messageApi.success(messageText);
+    });
+  };
 
   /**
    * @en-US Add node
@@ -129,21 +145,51 @@ const TableList: React.FC = () => {
       dataIndex: 'id',
       hideInSearch: true,
     },
+    // {
+    //   title: '短码',
+    //   dataIndex: 'code',
+    //   copyable: true,
+    //   renderText: (text, record) => record.short_url, // 指定复制的内容
+    //   render: (dom, entity) => {
+    //     return (
+    //       <a
+    //         onClick={() => {
+    //           window.open(entity.short_url, '_blank');
+    //         }}
+    //       >
+    //         {dom}
+    //       </a>
+    //     );
+    //   },
+    // },
     {
       title: '短码',
       dataIndex: 'code',
-      copyable: true,
-      render: (dom, entity) => {
-        return (
+      width: 10,
+      render: (_, entity) => (
+        <span className={styles.codeContainer}>
           <a
-            onClick={() => {
-              window.open(entity.short_url, '_blank');
-            }}
+            href={entity.short_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
           >
-            {dom}
+            {entity.code}
           </a>
-        );
-      },
+          <Tooltip title="复制短码">
+            <CopyOutlined
+              className={styles.copyIcon}
+              onClick={() => copyToClipboard(entity.code as string, '短码复制成功')}
+            />
+          </Tooltip>
+          <Tooltip title="复制短链">
+            <CopyOutlined
+              className={styles.copyIcon}
+              onClick={() => copyToClipboard(entity.short_url as string, '短链复制成功')}
+            />
+          </Tooltip>
+        </span>
+      ),
     },
     {
       title: '源地址',

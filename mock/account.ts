@@ -26,23 +26,23 @@ const accountLogin = async (req: Request, res: Response) => {
   const { password, username } = req.body;
   console.log('req:', req.body);
   await waitTime(2000);
-  if (password === 'ant.design' && username === 'admin') {
+  if (password === 'admin' && username === 'admin') {
     res.send({
-      token: 'admin-token'
+      token: 'admin-token',
     });
     access = 1;
     return;
   }
-  if (password === 'ant.design' && username === 'user') {
+  if (password === 'user' && username === 'user') {
     res.send({
-      token: 'user-token'
+      token: 'user-token',
     });
     access = 2;
     return;
   }
   res.status(401).send({
     errcode: 401,
-    errinfo: 'Authentication Failed'
+    errinfo: 'Authentication Failed',
   });
 };
 
