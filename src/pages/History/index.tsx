@@ -55,15 +55,18 @@ const TableList: React.FC = () => {
       sorter: true,
       dataIndex: 'id',
       hideInSearch: true,
+      width: 12,
     },
     {
       title: '短码',
       dataIndex: 'short_code',
       copyable: true,
+      width: 150,
     },
     {
       title: '访问者 IP',
       dataIndex: 'ip_address',
+      width: 100,
     },
     {
       title: '来源 URL',
@@ -76,13 +79,13 @@ const TableList: React.FC = () => {
       hideInSearch: true,
     },
     {
-      title: '国家',
-      dataIndex: 'country',
+      title: '区域',
+      dataIndex: 'region',
       hideInSearch: true,
     },
     {
-      title: '区域',
-      dataIndex: 'region',
+      title: '国家',
+      dataIndex: 'country',
       hideInSearch: true,
     },
     {
@@ -120,6 +123,7 @@ const TableList: React.FC = () => {
       dataIndex: 'accessed_at',
       valueType: 'dateTime',
       hideInSearch: true,
+      width: 146,
     },
     {
       title: '创建时间',
@@ -127,6 +131,7 @@ const TableList: React.FC = () => {
       dataIndex: 'created_at',
       valueType: 'dateTime',
       hideInSearch: true,
+      width: 146,
     },
   ];
 
@@ -187,7 +192,7 @@ const TableList: React.FC = () => {
             country: { show: false },
             region: { show: false },
             province: { show: false },
-            city: { show: false },
+            city: { show: true },
             // browser: { show: false },
             os: { show: false },
             device_type: { show: false },

@@ -16,7 +16,7 @@ const genList = (current: number, pageSize: number) => {
 
   for (let i = 0; i < pageSize; i += 1) {
     const index = (current - 1) * 10 + i + 1;
-    const code = Random.word(6, 8);
+    const code = Random.word(6, 16);
     tableListDataSource.push({
       id: index,
       code: code,

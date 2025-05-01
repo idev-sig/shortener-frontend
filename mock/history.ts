@@ -17,7 +17,7 @@ const genList = (current: number, pageSize: number) => {
       {
         'id|+1': 1, // 自增 ID
         'url_id|1-100': 1, // 短链接 ID（1-100随机）
-        short_code: '@word(5,8)', // 5-8位短码
+        short_code: '@word(6,16)', // 5-8位短码
         ip_address: '@ip', // IPv4 地址
         user_agent: '@string(16,32)', // 浏览器 UA
         referer: function () {

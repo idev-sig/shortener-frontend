@@ -144,6 +144,7 @@ const TableList: React.FC = () => {
       sorter: true,
       dataIndex: 'id',
       hideInSearch: true,
+      width: 12,
     },
     // {
     //   title: '短码',
@@ -165,7 +166,7 @@ const TableList: React.FC = () => {
     {
       title: '短码',
       dataIndex: 'code',
-      width: 10,
+      width: 180,
       render: (_, entity) => (
         <span className={styles.codeContainer}>
           <a
@@ -217,6 +218,7 @@ const TableList: React.FC = () => {
       title: '状态',
       dataIndex: 'status',
       hideInForm: true,
+      width: 58,
       valueEnum: {
         0: {
           text: '启用',
@@ -238,6 +240,7 @@ const TableList: React.FC = () => {
       dataIndex: 'updated_at',
       valueType: 'dateTime',
       hideInSearch: true,
+      width: 146,
     },
     {
       title: '创建时间',
@@ -245,11 +248,13 @@ const TableList: React.FC = () => {
       dataIndex: 'created_at',
       valueType: 'dateTime',
       hideInSearch: true,
+      width: 146,
     },
     {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
+      width: 80,
       render: (_, record) => [
         <a
           key="update"
