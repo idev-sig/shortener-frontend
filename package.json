@@ -74,7 +74,7 @@
     "@types/react-helmet": "^6.1.11",
     "@typescript-eslint/eslint-plugin": "^8.31.0",
     "@typescript-eslint/parser": "^8.31.0",
-    "@umijs/lint": "^4.4.6",
+    "@umijs/lint": "^4.4.10",
     "@umijs/max": "^4.4.10",
     "cross-env": "^7.0.3",
     "eslint": "^9.25.1",
