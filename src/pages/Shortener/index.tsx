@@ -27,6 +27,10 @@ const useStyles = createStyles(({ token }) => {
     footerToolBar: {
       fontWeight: 600,
     },
+    rightAlignedTitle: {
+      display: 'block',
+      textAlign: 'right',
+    },
     codeContainer: {
       display: 'flex',
       justifyContent: 'flex-end',
@@ -164,7 +168,7 @@ const TableList: React.FC = () => {
     //   },
     // },
     {
-      title: '短码',
+      title: <span className={styles.rightAlignedTitle}>短码</span>,
       dataIndex: 'code',
       width: 180,
       render: (_, entity) => (

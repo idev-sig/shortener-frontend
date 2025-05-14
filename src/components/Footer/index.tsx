@@ -19,13 +19,13 @@ const Footer: React.FC = () => {
         {
           key: 'Shortener Code',
           title: <GitlabFilled />,
-          href: 'https://git.jetsung.com/idev/shortener',
+          href: 'https://git.jetsung.com/idev/shortener-server',
           blankTarget: true,
         },
         {
           key: 'Shortener GitHub',
           title: <GithubFilled />,
-          href: 'https://github.com/idevsig/shortener',
+          href: 'https://github.com/idevsig/shortener-server',
           blankTarget: true,
         },
       ]}

@@ -12,9 +12,8 @@ export const errorConfig: RequestConfig = {
   errorConfig: {
     // 错误抛出
     errorThrower: (res) => {
-      console.log('errorThrower:', res);
-      const { errcode, errinfo } =
-        res as unknown as API.ErrorResponse;
+      // console.log('errorThrower:', res);
+      const { errcode, errinfo } = res as unknown as API.ErrorResponse;
       if (errcode && errinfo) {
         const error: any = new Error(errinfo);
         error.name = 'BizError';
@@ -25,7 +24,7 @@ export const errorConfig: RequestConfig = {
     // 错误接收及处理
     errorHandler: (error: any, opts: any) => {
       // console.log('errorHandler:', error, opts);
-      console.log('errorHandler:', error);
+      // console.log('errorHandler:', error);
       if (opts?.skipErrorHandler) throw error;
       if (error.name === 'BizError') {
         console.error('BizError:', error);
