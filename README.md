@@ -42,7 +42,7 @@ npm run build
 
 ## 部署
 
-部署教程查看 [**shortener-server**](https://git.jetsung.com/idev/shortener-frontend#文档) 项目。
+部署教程查看 [**shortener-server**](https://git.jetsung.com/idev/shortener-server#文档) 项目。
 
 ## 仓库镜像
 

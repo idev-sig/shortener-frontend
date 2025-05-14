@@ -30,7 +30,7 @@ const useStyles = createStyles(({ token }) => {
       gap: 16,
     },
   };
-})
+});
 
 const Dashboard: React.FC = () => {
   const { token } = theme.useToken();
@@ -43,20 +43,34 @@ const Dashboard: React.FC = () => {
           borderRadius: 8,
         }}
         styles={{
-          body:{
-          backgroundImage:
-            initialState?.settings?.navTheme === 'realDark'
-              ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
-              : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
-          }
+          body: {
+            backgroundImage:
+              initialState?.settings?.navTheme === 'realDark'
+                ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
+                : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
+          },
         }}
       >
         <div className={styles.container}>
-          <div className={styles.textHeading}>
-            欢迎使用 Shortener 短网址生成器
-          </div>
+          <div className={styles.textHeading}>欢迎使用 Shortener 短网址生成器</div>
           <p className={styles.welcome}>
-            Shortener 是一个使用 Go 语言开发的短网址生成器。<a href='https://git.jetsung.com/idev/shortener' target='_blank'>后端使用 Gin 框架</a>，<a href='https://git.jetsung.com/idev/shortener-frontend' target='_blank'>前端使用 React 框架</a>，UI 框架使用 Ant Design。
+            Shortener 是一个使用 Go 语言开发的短网址生成器。
+            <a
+              rel="noopener noreferrer"
+              href="https://git.jetsung.com/idev/shortener-server"
+              target="_blank"
+            >
+              后端使用 Gin 框架
+            </a>
+            ，
+            <a
+              rel="noopener noreferrer"
+              href="https://git.jetsung.com/idev/shortener-frontend"
+              target="_blank"
+            >
+              前端使用 React 框架
+            </a>
+            ，UI 框架使用 Ant Design。
           </p>
         </div>
       </Card>

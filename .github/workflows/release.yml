@@ -6,8 +6,12 @@ on:
       - "*"
 
 jobs:
-  build:
+  publish-release:
     runs-on: ubuntu-latest
+
+    env:
+      GH_TOKEN: ${{ github.token }}
+
     steps:
     - uses: actions/checkout@v4
     - name: Get version
@@ -18,8 +22,11 @@ jobs:
 
     - name: Write Changelog
       run: |
-        prev_to_latest="${{ env.PREV_VERSION }}...${{ env.RELEASE_VERSION }}"
-        printf "\n\n**Full Changelog:** [\`${prev_to_latest}\`](https://github.com/${{ github.repository }}/compare/${prev_to_latest})" >> .CurrentChangelog.md
+        touch .CurrentChangelog.md
+        if [ -n "${{ env.PREV_VERSION }}" ]; then
+          prev_to_latest="${{ env.PREV_VERSION }}...${{ env.RELEASE_VERSION }}"
+          printf "\n\n**Full Changelog:** [\`${prev_to_latest}\`](https://github.com/${{ github.repository }}/compare/${prev_to_latest})" >> .CurrentChangelog.md
+        fi
     - uses: oven-sh/setup-bun@v2
       with:
         bun-version: latest
@@ -27,3 +34,31 @@ jobs:
       run: |
         bun install
         bun run build
+
+    - name: Create Package
+      run: |
+        mv dist shortener
+        tar -czvf "shortener-frontend_${{ env.RELEASE_VERSION }}.tar.gz" shortener
+        ls -lh
+
+    - name: Create Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        ls -lh
+        gh release create ${{ env.RELEASE_VERSION }} --draft --notes-file .CurrentChangelog.md --prerelease --title "${{ env.RELEASE_VERSION }}" --verify-tag
+
+    - name: Upload Release Asset
+      run: |
+        ls -lh
+        gh release upload ${{ env.RELEASE_VERSION }} ./*.tar.gz --clobber
+
+    - name: Publish Release
+      run: |
+        gh release edit ${{ env.RELEASE_VERSION }} --draft=false --prerelease=false --latest
+
+    # - name: Upload artifacts
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: artifact
+    #     path: ./*.tar.gz
