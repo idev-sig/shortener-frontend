@@ -1,7 +1,7 @@
 openapi: '3.0.1'
 info:
   title: Shortener
-  version: '0.2.0'
+  version: '0.2.2'
 servers:
   - url: 'http://localhost:8000/'
   - url: 'https://localhost:8000/'

@@ -20,8 +20,8 @@ export default {
       // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,
       pathRewrite: {
-        '^/api': '/api/v1' // 将/api替换为/api/v1
-      }      
+        '^/api': '/api/', // 将/api替换为/api/
+      },
     },
   },
 
