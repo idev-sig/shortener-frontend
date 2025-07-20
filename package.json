@@ -1,6 +1,6 @@
 {
   "name": "shortener",
-  "version": "0.2.2-dev",
+  "version": "0.2.2",
   "private": true,
   "description": "A simple URL shortener service",
   "scripts": {
