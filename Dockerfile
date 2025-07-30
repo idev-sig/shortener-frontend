@@ -5,11 +5,10 @@ COPY . .
 
 RUN <<EOF
 # 若已存在 dist 目录，则跳过构建
-if [[ ! -d dist ]]; then
+if [ ! -d dist ]; then
     npm install
     npm run build
 fi
-ls -lh
 EOF
 
 FROM joseluisq/static-web-server:2
