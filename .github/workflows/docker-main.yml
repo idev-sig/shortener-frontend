@@ -27,6 +27,17 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build
+        run: npm run build        
+
       - name: Set repo
         id: set_repo
         run: |

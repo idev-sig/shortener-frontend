@@ -4,8 +4,10 @@ WORKDIR /build
 COPY . .
 
 RUN <<EOF
-npm install
-npm run build
+if [[ ! -d /build/dist ]]; then
+    npm install
+    npm run build
+fi
 EOF
 
 FROM joseluisq/static-web-server:2

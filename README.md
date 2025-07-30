@@ -49,4 +49,4 @@ npm run build
 - https://git.jetsung.com/idev/shortener-frontend
 - https://framagit.org/idev/shortener-frontend
 - https://gitcode.com/idev/shortener-frontend
-- https://github.com/idevsig/shortener-frontend
+- https://github.com/idev-sig/shortener-frontend
