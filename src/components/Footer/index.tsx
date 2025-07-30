@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         {
           key: 'Shortener GitHub',
           title: <GithubFilled />,
-          href: 'https://github.com/idevsig/shortener-server',
+          href: 'https://github.com/idev-sig/shortener-server',
           blankTarget: true,
         },
       ]}
