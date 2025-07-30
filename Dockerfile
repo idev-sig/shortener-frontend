@@ -4,7 +4,8 @@ WORKDIR /build
 COPY . .
 
 RUN <<EOF
-if [[ ! -d /build/dist ]]; then
+# 若已存在 dist 目录，则跳过构建
+if [ ! -d dist ]; then
     npm install
     npm run build
 fi
