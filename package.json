@@ -72,7 +72,7 @@
     "@typescript-eslint/eslint-plugin": "^8.31.0",
     "@typescript-eslint/parser": "^8.31.0",
     "@umijs/lint": "^4.4.11",
-    "@umijs/max": "^4.4.11",
+    "@umijs/max": "^4.4.12",
     "cross-env": "^7.0.3",
     "eslint": "^9.25.1",
     "eslint-plugin-react": "^7.37.5",
