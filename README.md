@@ -2,9 +2,18 @@
 
 一个超简单的短网址管理平台（前端）。
 
-[**配置后端 API：shortener-server**](https://git.jetsung.com/idev/shortener-server)
+[**配置后端 API：shortener-frontend**](https://git.jetsung.com/idev/shortener-frontend)
 
-预览: ![Shortener](screenshot.png)
+## [Docker](./deploy/docker/README.md)
+
+> **版本：** `latest`, `dev`, <`TAG`>
+
+| Registry | Image |
+| --- | --- |
+| [**Docker Hub**](https://hub.docker.com/r/idevsig/shortener-frontend/) | `idevsig/shortener-frontend` |
+| [**GitHub Container Registry**](https://github.com/idev-sig/shortener-frontend/pkgs/container/shortener-frontend) | `ghcr.io/idev-sig/shortener-frontend` |
+| **Tencent Cloud Container Registry（SG）** | `sgccr.ccs.tencentyun.com/idevsig/shortener-frontend` |
+| **Aliyun Container Registry（GZ）** | `registry.cn-guangzhou.aliyuncs.com/idevsig/shortener-frontend` |
 
 ## 开发与构建
 
@@ -42,11 +51,11 @@ npm run build
 
 ## 部署
 
-部署教程查看 [**shortener-server**](https://git.jetsung.com/idev/shortener-server#文档) 项目。
+部署教程查看 [**shortener-frontend**](https://git.jetsung.com/idev/shortener-frontend#文档) 项目。
 
 ## 仓库镜像
 
-- https://git.jetsung.com/idev/shortener-frontend
-- https://framagit.org/idev/shortener-frontend
-- https://gitcode.com/idev/shortener-frontend
-- https://github.com/idev-sig/shortener-frontend
+- [MyCode](https://git.jetsung.com/idev/shortener-frontend)
+- [Framagit](https://framagit.org/idev/shortener-frontend)
+- [GitCode](https://gitcode.com/idev/shortener-frontend)
+- [GitHub](https://github.com/idev-sig/shortener-frontend)

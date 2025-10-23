@@ -47,3 +47,14 @@ bun.lock
 .pnp.cjs
 .pnp.loader.mjs
 .yarn/
+
+# act
+.env
+.actrc
+.actrcs
+.artifacts
+.secrets
+event.json
+
+
+

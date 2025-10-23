@@ -1,8 +1,8 @@
-// @ts-ignore
+// @ts-expect-error auto-generated code
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 获取所有日志信息 获取所有日志信息 GET /api/histories */
+/** 获取访问历史记录 获取所有访问日志信息 GET /api/histories */
 export async function getHistories(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getHistoriesParams,
@@ -13,10 +13,10 @@ export async function getHistories(
     params: {
       // page has a default value: 1
       page: '1',
-      // page_size has a default value: 10
-      page_size: '10',
-      // sort_by has a default value: created_at
-      sort_by: 'created_at',
+      // per_page has a default value: 10
+      per_page: '10',
+      // sort_by has a default value: accessed_at
+      sort_by: 'accessed_at',
       // order has a default value: desc
       order: 'desc',
       ...params,
@@ -25,13 +25,13 @@ export async function getHistories(
   });
 }
 
-/** 删除日志列表 删除日志列表 返回值: 未知错误 DELETE /api/histories */
+/** 删除访问日志 批量删除访问日志 DELETE /api/histories */
 export async function deleteHistories(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.deleteHistoriesParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.Error>('/api/histories', {
+  return request<void>('/api/histories', {
     method: 'DELETE',
     params: {
       ...params,

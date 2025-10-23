@@ -101,11 +101,11 @@ const TableList: React.FC = () => {
     try {
       await updateShorten(
         {
-          code: fields.code as string,
+          short_code: fields.short_code as string,
         },
         {
           original_url: fields.original_url as string,
-          describe: fields.describe,
+          description: fields.description,
         },
       );
       hide();
@@ -169,7 +169,7 @@ const TableList: React.FC = () => {
     // },
     {
       title: <span className={styles.rightAlignedTitle}>短码</span>,
-      dataIndex: 'code',
+      dataIndex: 'short_code',
       width: 180,
       render: (_, entity) => (
         <span className={styles.codeContainer}>
@@ -179,12 +179,12 @@ const TableList: React.FC = () => {
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
           >
-            {entity.code}
+            {entity.short_code}
           </a>
           <Tooltip title="复制短码">
             <CopyOutlined
               className={styles.copyIcon}
-              onClick={() => copyToClipboard(entity.code as string, '短码复制成功')}
+              onClick={() => copyToClipboard(entity.short_code as string, '短码复制成功')}
             />
           </Tooltip>
           <Tooltip title="复制短链">
@@ -214,7 +214,7 @@ const TableList: React.FC = () => {
     },
     {
       title: '描述',
-      dataIndex: 'describe',
+      dataIndex: 'description',
       valueType: 'textarea',
       hideInSearch: true,
     },
@@ -300,11 +300,11 @@ const TableList: React.FC = () => {
           let success = false;
 
           try {
-            const { current: page, pageSize: page_size, ...rest } = params;
-            // console.log(page, page_size, params, sorter, filter, rest);
+            const { current: page, pageSize: per_page, ...rest } = params;
+            // console.log(page, per_page, params, sorter, filter, rest);
             const query: API.getShortensParams = {
               page: page || 1,
-              page_size: page_size || 10,
+              per_page: per_page || 10,
               ...rest,
             };
             const orderBy = Object.entries(sorter)[0];
@@ -314,11 +314,11 @@ const TableList: React.FC = () => {
             }
             const res = await getShortens(query);
             data = res.data || [];
-            total = res.meta?.total_items || 0;
+            total = res.meta?.total || 0;
             success = true;
           } catch (error: any) {
-            let { errinfo } = error?.response?.data;
-            messageApi.error(errinfo ?? '数据获取失败');
+            let { error_message } = error?.response?.data;
+            messageApi.error(error_message ?? '数据获取失败');
 
             const { status } = error?.response;
             if (status === 401) {
@@ -379,7 +379,7 @@ const TableList: React.FC = () => {
           }
         }}
       >
-        <ProFormText width="sm" name="code" label="短码" placeholder="请输入短码。可选" />
+        <ProFormText width="sm" name="short_code" label="短码" placeholder="请输入短码。可选" />
         <ProFormText
           rules={[
             {
@@ -392,7 +392,7 @@ const TableList: React.FC = () => {
           label="源链接"
           placeholder="请输入源链接"
         />
-        <ProFormTextArea width="md" name="describe" label="描述" placeholder="链接描述" />
+        <ProFormTextArea width="md" name="description" label="描述" placeholder="链接描述" />
       </ModalForm>
 
       <UpdateForm

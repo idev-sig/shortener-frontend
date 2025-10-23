@@ -151,11 +151,11 @@ const TableList: React.FC = () => {
           let success = false;
 
           try {
-            const { current: page, pageSize: page_size, ...rest } = params;
-            // console.log(page, page_size, params, sorter, filter, rest);
-            const query: API.getShortensParams = {
+            const { current: page, pageSize: per_page, ...rest } = params;
+            // console.log(page, per_page, params, sorter, filter, rest);
+            const query: API.getHistoriesParams = {
               page: page || 1,
-              page_size: page_size || 10,
+              per_page: per_page || 10,
               ...rest,
             };
             const orderBy = Object.entries(sorter)[0];
@@ -165,11 +165,11 @@ const TableList: React.FC = () => {
             }
             const res = await getHistories(query);
             data = res.data || [];
-            total = res.meta?.total_items || 0;
+            total = res.meta?.total || 0;
             success = true;
           } catch (error: any) {
-            let { errinfo } = error?.response?.data;
-            messageApi.error(errinfo ?? '数据获取失败');
+            let { error_message } = error?.response?.data;
+            messageApi.error(error_message ?? '数据获取失败');
 
             const { status } = error?.response;
             if (status === 401) {

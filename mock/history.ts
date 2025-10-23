@@ -35,8 +35,8 @@ const genList = (current: number, pageSize: number) => {
         'device_type|1': ['pc', 'mobile', 'tablet'], // 设备类型
         'os|1': ['Windows', 'MacOS', 'Linux', 'Android', 'iOS'], // 操作系统
         'browser|1': ['Chrome', 'Firefox', 'Safari', 'Edge'], // 浏览器
-        accessed_time: '@datetime', // 访问时间（如 "2024-03-20 12:00:00"）
-        created_time: '@datetime', // 创建时间
+        accessed_at: '@datetime', // 访问时间（如 "2024-03-20 12:00:00"）
+        created_at: '@datetime', // 创建时间
       },
     ],
   }).list.map((item: any) => {
@@ -73,7 +73,7 @@ function getHistorys(req: Request, res: Response, u: string) {
     realUrl = req.url;
   }
 
-  const { page = 1, page_size = 10 } = req.query;
+  const { page = 1, per_page = 10 } = req.query;
   const params = parse(realUrl, true).query as unknown as API.PageParams &
     API.HistoryResponse & {
       sorter: any;
@@ -83,7 +83,7 @@ function getHistorys(req: Request, res: Response, u: string) {
   // console.log('params', params);
 
   const pageInt: number = parseInt(page as string);
-  const pageSizeInt: number = parseInt(page_size as string);
+  const pageSizeInt: number = parseInt(per_page as string);
   let dataSource = [...tableListDataSource].slice(
     (pageInt - 1) * pageSizeInt,
     pageInt * pageSizeInt,
@@ -145,9 +145,9 @@ function getHistorys(req: Request, res: Response, u: string) {
     data: dataSource,
     meta: {
       page: pageInt,
-      page_size: pageSizeInt,
-      current_count: dataSource.length,
-      total_items: tableListDataSource.length,
+      per_page: pageSizeInt,
+      count: dataSource.length,
+      total: tableListDataSource.length,
       total_pages: Math.ceil(tableListDataSource.length / pageSizeInt),
     },
   };
@@ -184,7 +184,7 @@ function deleteHistorys(req: Request, res: Response, u: string, b: Request) {
   const idArray = (ids as string).split(',') || [];
 
   if (idArray.length === 0) {
-    res.status(400).json({ errcode: 400, errinfo: 'ids is required' });
+    res.status(400).json({ error_code: '400', error_message: 'ids is required' });
     return;
   }
 

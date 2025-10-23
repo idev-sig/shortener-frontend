@@ -41,8 +41,8 @@ const accountLogin = async (req: Request, res: Response) => {
     return;
   }
   res.status(401).send({
-    errcode: 401,
-    errinfo: 'Authentication Failed',
+    error_code: '401',
+    error_message: 'Authentication Failed',
   });
 };
 
@@ -56,8 +56,8 @@ const accountLogout = (req: Request, res: Response) => {
 const currentUser = (req: Request, res: Response) => {
   if (!getAccess()) {
     res.status(401).send({
-      errcode: '401',
-      errinfo: '请先登录！',
+      error_code: '401',
+      error_message: '请先登录！',
     });
     return;
   }

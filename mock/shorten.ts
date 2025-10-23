@@ -16,13 +16,13 @@ const genList = (current: number, pageSize: number) => {
 
   for (let i = 0; i < pageSize; i += 1) {
     const index = (current - 1) * 10 + i + 1;
-    const code = Random.word(6, 16);
+    const short_code = Random.word(6, 16);
     tableListDataSource.push({
       id: index,
-      code: code,
-      short_url: `${siteUrl}/?${code}`,
+      short_code: short_code,
+      short_url: `${siteUrl}/?${short_code}`,
       original_url: Random.url('http', 'baidu.com?'),
-      describe: `这是一段描述: ${index}`,
+      description: `这是一段描述: ${index}`,
       status: Math.floor(Math.random() * 10) % 3,
       created_at: Random.now('second'),
       updated_at: Random.now('second'),
@@ -48,7 +48,7 @@ function getShortens(req: Request, res: Response, u: string) {
     realUrl = req.url;
   }
 
-  const { page = 1, page_size = 10 } = req.query;
+  const { page = 1, per_page = 10 } = req.query;
   const params = parse(realUrl, true).query as unknown as API.PageParams &
     API.ShortenResponse & {
       sorter: any;
@@ -58,7 +58,7 @@ function getShortens(req: Request, res: Response, u: string) {
   // console.log('params', params);
 
   const pageInt: number = parseInt(page as string);
-  const pageSizeInt: number = parseInt(page_size as string);
+  const pageSizeInt: number = parseInt(per_page as string);
   let dataSource = [...tableListDataSource].slice(
     (pageInt - 1) * pageSizeInt,
     pageInt * pageSizeInt,
@@ -106,8 +106,8 @@ function getShortens(req: Request, res: Response, u: string) {
     }
   }
 
-  if (params.code) {
-    dataSource = dataSource.filter((data) => data?.code?.includes(params.code || ''));
+  if (params.short_code) {
+    dataSource = dataSource.filter((data) => data?.short_code?.includes(params.short_code || ''));
   }
   if (params.original_url) {
     dataSource = dataSource.filter((data) =>
@@ -122,9 +122,9 @@ function getShortens(req: Request, res: Response, u: string) {
     data: dataSource,
     meta: {
       page: pageInt,
-      page_size: pageSizeInt,
-      current_count: dataSource.length,
-      total_items: tableListDataSource.length,
+      per_page: pageSizeInt,
+      count: dataSource.length,
+      total: tableListDataSource.length,
       total_pages: Math.ceil(tableListDataSource.length / pageSizeInt),
     },
   };
@@ -149,15 +149,15 @@ function postShorten(req: Request, res: Response, u: string, b: Request) {
   }
 
   const body = (b && b.body) || req.body;
-  const { code, original_url, describe } = body;
+  const { short_code, original_url, description } = body;
 
-  const newCode = code || Random.word(6, 8);
+  const newShortCode = short_code || Random.word(6, 8);
   const newShorten: API.ShortenResponse = {
     id: tableListDataSource.length + 1,
-    code: newCode,
-    short_url: `${siteUrl}/?${newCode}`,
+    short_code: newShortCode,
+    short_url: `${siteUrl}/?${newShortCode}`,
     original_url,
-    describe,
+    description,
     status: Math.floor(Math.random() * 10) % 3,
     created_at: Random.now('second'),
     updated_at: Random.now('second'),
@@ -187,14 +187,14 @@ function putShorten(req: Request, res: Response, u: string, b: Request) {
 
   const body: any = (b && b.body) || req.body;
   const { id } = req.params;
-  const { original_url, describe } = body;
+  const { original_url, description } = body;
 
   const idNumber = parseInt(id as string);
   let newShorten = {} as API.ShortenResponse;
   tableListDataSource = tableListDataSource.map((item) => {
     if (item.id === idNumber) {
-      newShorten = { ...item, original_url, describe };
-      return { ...item, original_url, describe };
+      newShorten = { ...item, original_url, description };
+      return { ...item, original_url, description };
     }
     return item;
   });
@@ -237,7 +237,7 @@ function deleteShortens(req: Request, res: Response, u: string, b: Request) {
   const idArray = (ids as string).split(',') || [];
 
   if (idArray.length === 0) {
-    res.status(400).json({ errcode: 400, errinfo: 'ids is required' });
+    res.status(400).json({ error_code: '400', error_message: 'ids is required' });
     return;
   }
 

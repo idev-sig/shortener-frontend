@@ -101,25 +101,25 @@ const Login: React.FC = () => {
       setUserLoginState(msg);
     } catch (error: any) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
-      let { errcode, errinfo } = error?.response?.data;
+      let { error_code, error_message } = error?.response?.data;
 
-      if (!errcode) {
-        errcode = error?.response?.status || 1;
+      if (!error_code) {
+        error_code = error?.response?.status?.toString() || '1';
       }
-      if (!errinfo) {
-        errinfo = defaultLoginFailureMessage;
+      if (!error_message) {
+        error_message = defaultLoginFailureMessage;
       }
 
       const err: API.LoginResult = {
-        errcode,
-        errinfo,
+        error_code,
+        error_message,
       };
 
-      messageApi.error(err.errinfo);
+      messageApi.error(err.error_message);
       setUserLoginState(err);
     }
   };
-  const { errcode, errinfo } = userLoginState;
+  const { error_code, error_message } = userLoginState;
   return (
     <div className={styles.container}>
       {contextHolder}
@@ -138,13 +138,13 @@ const Login: React.FC = () => {
           title="Shortener"
           subTitle={'短网址管理平台'}
           initialValues={{
-            auto: true,
+            auto_login: true,
           }}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginParams);
           }}
         >
-          {errcode && errinfo && <LoginMessage content={errinfo} />}
+          {error_code && error_message && <LoginMessage content={error_message} />}
           <>
             <ProFormText
               name="username"
@@ -178,7 +178,7 @@ const Login: React.FC = () => {
             />
           </>
           <div className={styles.marginBottom}>
-            <ProFormCheckbox noStyle name="auto">
+            <ProFormCheckbox noStyle name="auto_login">
               自动登录
             </ProFormCheckbox>
             <a className={styles.fotget}>忘记密码 ?</a>

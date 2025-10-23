@@ -1,8 +1,4 @@
-import {
-  ProFormText,
-  ProFormTextArea,
-  ModalForm,
-} from '@ant-design/pro-components';
+import { ProFormText, ProFormTextArea, ModalForm } from '@ant-design/pro-components';
 import '@umijs/max';
 import React from 'react';
 
@@ -29,41 +25,34 @@ export type UpdateFormProps = {
  */
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   return (
-      <ModalForm
-        key={props.values.code}
-        initialValues={props.values}
-        title={'更新短链'}
-        width="400px"
-        open={props.updateModalOpen}
-        onOpenChange={props.onCancel}
-        onFinish={props.onSubmit}
-      >
-        <ProFormText
-          name="code"
-          hidden
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: '源链接为必填项',
-            },
-            {
-              type: 'url',
-              message: '请输入有效的 URL'
-            },
-          ]}
-          width="md"
-          name="original_url"
-          label="源链接"
-          placeholder="请输入源链接"
-        />
-        <ProFormTextArea
-          width="md"
-          name="describe"
-          label="链接描述"
-          placeholder="链接描述" />
-      </ModalForm>
+    <ModalForm
+      key={props.values.short_code}
+      initialValues={props.values}
+      title={'更新短链'}
+      width="400px"
+      open={props.updateModalOpen}
+      onOpenChange={props.onCancel}
+      onFinish={props.onSubmit}
+    >
+      <ProFormText name="short_code" hidden />
+      <ProFormText
+        rules={[
+          {
+            required: true,
+            message: '源链接为必填项',
+          },
+          {
+            type: 'url',
+            message: '请输入有效的 URL',
+          },
+        ]}
+        width="md"
+        name="original_url"
+        label="源链接"
+        placeholder="请输入源链接"
+      />
+      <ProFormTextArea width="md" name="description" label="链接描述" placeholder="链接描述" />
+    </ModalForm>
   );
 };
 export default UpdateForm;
