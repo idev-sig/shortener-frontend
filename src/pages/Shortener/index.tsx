@@ -283,6 +283,10 @@ const TableList: React.FC = () => {
         search={{
           labelWidth: 120,
         }}
+        pagination={{
+          showQuickJumper: true,
+          showSizeChanger: true,
+        }}
         toolBarRender={() => [
           <Button
             type="primary"

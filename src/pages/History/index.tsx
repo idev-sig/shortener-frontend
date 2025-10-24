@@ -145,6 +145,10 @@ const TableList: React.FC = () => {
         search={{
           labelWidth: 120,
         }}
+        pagination={{
+          showQuickJumper: true,
+          showSizeChanger: true,
+        }}
         request={async (params, sorter, filter) => {
           let data: any = [];
           let total = 0;
