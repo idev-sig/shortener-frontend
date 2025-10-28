@@ -79,11 +79,6 @@ const TableList: React.FC = () => {
       hideInSearch: true,
     },
     {
-      title: '区域',
-      dataIndex: 'region',
-      hideInSearch: true,
-    },
-    {
       title: '国家',
       dataIndex: 'country',
       hideInSearch: true,
@@ -164,9 +159,15 @@ const TableList: React.FC = () => {
             };
             const orderBy = Object.entries(sorter)[0];
             if (orderBy && orderBy.length === 2) {
-              query.sort_by = orderBy[0];
-              query.order = orderBy[1] === 'ascend' ? 'asc' : 'desc';
+              const sortField = orderBy[0];
+              const allowedSortFields = ['id', 'accessed_at', 'created_at'];
+
+              if (allowedSortFields.includes(sortField)) {
+                query.sort_by = sortField as 'id' | 'accessed_at' | 'created_at';
+                query.order = orderBy[1] === 'ascend' ? 'asc' : 'desc';
+              }
             }
+
             const res = await getHistories(query);
             data = res.data || [];
             total = res.meta?.total || 0;
@@ -194,13 +195,12 @@ const TableList: React.FC = () => {
           defaultValue: {
             referer: { show: false },
             country: { show: false },
-            region: { show: false },
             province: { show: false },
             city: { show: true },
             // browser: { show: false },
             os: { show: false },
             device_type: { show: false },
-            isp: { show: false },
+            isp: { show: true },
           },
         }}
         rowSelection={{
